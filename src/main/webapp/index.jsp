@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <jsp:include page="/resources/vue.jsp" flush="true"/>
 </head>
 <body>
 <div id="app">

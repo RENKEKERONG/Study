@@ -1,0 +1,50 @@
+/* 下拉选option */
+.kt-select-tree__option {
+    display: none;
+    padding: 0 !important;
+}
+
+/* 弹出框 */
+.kt-select-tree__popover{
+    margin-top: 0 !important;
+    padding: 5px 0;
+}
+
+/* 搜索框 */
+.kt-select-tree__input{
+    padding: 0 4px 4px !important;
+}
+
+/* tree树形控件 */
+.kt-select-tree {
+    overflow-y: scroll;
+    max-height: 350px;
+}
+
+.kt-select-tree::-webkit-scrollbar {
+    z-index: 11;
+    width: 6px;
+}
+
+.kt-select-tree::-webkit-scrollbar-track,
+.kt-select-tree::-webkit-scrollbar-corner {
+    background: #fff;
+}
+
+.kt-select-tree::-webkit-scrollbar-thumb {
+    width: 6px;
+    border-radius: 5px;
+    background: #b4bccc;
+}
+
+.kt-select-tree::-webkit-scrollbar-track-piece {
+    width: 6px;
+    background: #fff;
+}
+
+/* 覆盖默认高亮效果 */
+.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+    background-color: #409eff !important;
+    color: #fff;
+
+}

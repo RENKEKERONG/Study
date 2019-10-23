@@ -3904,7 +3904,7 @@
         var options = vm.$options;
 
         // locate first non-abstract parent
-        var parent = options.tableDate;
+        var parent = options.parent;
         if (parent && !options.abstract) {
             while (parent.$options.abstract && parent.$parent) {
                 parent = parent.$parent;
@@ -5012,7 +5012,7 @@
         var opts = vm.$options = Object.create(vm.constructor.options);
         // doing this because it's faster than dynamic enumeration.
         var parentVnode = options._parentVnode;
-        opts.parent = options.tableDate;
+        opts.parent = options.parent;
         opts._parentVnode = parentVnode;
 
         var vnodeComponentOptions = parentVnode.componentOptions;
@@ -5504,7 +5504,7 @@
                 data = mergeClassData(childNode.data, data);
             }
         }
-        while (isDef(parentNode = parentNode.tableDate)) {
+        while (isDef(parentNode = parentNode.parent)) {
             if (parentNode && parentNode.data) {
                 data = mergeClassData(data, parentNode.data);
             }
@@ -6077,7 +6077,7 @@
                     if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
                         nodeOps.setStyleScope(vnode.elm, i);
                     }
-                    ancestor = ancestor.tableDate;
+                    ancestor = ancestor.parent;
                 }
             }
             // for slot content they should also get the scopeId from the host instance.
@@ -6328,8 +6328,8 @@
         function invokeInsertHook (vnode, queue, initial) {
             // delay insert hooks for component root nodes, invoke them after the
             // element is really inserted
-            if (isTrue(initial) && isDef(vnode.tableDate)) {
-                vnode.tableDate.data.pendingInsert = queue;
+            if (isTrue(initial) && isDef(vnode.parent)) {
+                vnode.parent.data.pendingInsert = queue;
             } else {
                 for (var i = 0; i < queue.length; ++i) {
                     queue[i].data.hook.insert(queue[i]);
@@ -6511,8 +6511,8 @@
                     );
 
                     // update parent placeholder node element, recursively
-                    if (isDef(vnode.tableDate)) {
-                        var ancestor = vnode.tableDate;
+                    if (isDef(vnode.parent)) {
+                        var ancestor = vnode.parent;
                         var patchable = isPatchable(vnode);
                         while (ancestor) {
                             for (var i = 0; i < cbs.destroy.length; ++i) {
@@ -6536,7 +6536,7 @@
                             } else {
                                 registerRef(ancestor);
                             }
-                            ancestor = ancestor.tableDate;
+                            ancestor = ancestor.parent;
                         }
                     }
 
@@ -7757,7 +7757,7 @@
         }
 
         var parentNode = vnode;
-        while ((parentNode = parentNode.tableDate)) {
+        while ((parentNode = parentNode.parent)) {
             if (parentNode.data && (styleData = normalizeStyleData(parentNode.data))) {
                 extend(res, styleData);
             }
@@ -8150,9 +8150,9 @@
         // <transition>'s parent for appear check.
         var context = activeInstance;
         var transitionNode = activeInstance.$vnode;
-        while (transitionNode && transitionNode.tableDate) {
+        while (transitionNode && transitionNode.parent) {
             context = transitionNode.context;
-            transitionNode = transitionNode.tableDate;
+            transitionNode = transitionNode.parent;
         }
 
         var isAppear = !context._isMounted || !vnode.isRootInsert;
@@ -8706,7 +8706,7 @@
     }
 
     function hasParentTransition (vnode) {
-        while ((vnode = vnode.tableDate)) {
+        while ((vnode = vnode.parent)) {
             if (vnode.data.transition) {
                 return true
             }
@@ -9971,7 +9971,7 @@
                 }
                 if (el.for) {
                     var iterator = el.iterator2 || el.iterator1;
-                    var parent = el.tableDate;
+                    var parent = el.parent;
                     if (iterator && iterator === exp && parent && parent.tag === 'transition-group') {
                         warn$2(
                             "Do not use v-for index as key on <transition-group> children, " +
@@ -10154,7 +10154,7 @@
                                 el
                             );
                         }
-                        if (el.tableDate && !maybeComponent(el.tableDate)) {
+                        if (el.parent && !maybeComponent(el.parent)) {
                             warn$2(
                                 "<template v-slot> can only appear at the root level inside " +
                                 "the receiving the component",
@@ -10472,7 +10472,7 @@
                     el.rawAttrsMap['v-model']
                 );
             }
-            _el = _el.tableDate;
+            _el = _el.parent;
         }
     }
 
@@ -10541,7 +10541,7 @@
     }
 
     function cloneASTElement (el) {
-        return createASTElement(el.tag, el.attrsList.slice(), el.tableDate)
+        return createASTElement(el.tag, el.attrsList.slice(), el.parent)
     }
 
     var model$1 = {
@@ -10706,8 +10706,8 @@
     }
 
     function isDirectChildOfTemplateFor (node) {
-        while (node.tableDate) {
-            node = node.tableDate;
+        while (node.parent) {
+            node = node.parent;
             if (node.tag !== 'template') {
                 return false
             }
@@ -10940,8 +10940,8 @@
     }
 
     function genElement (el, state) {
-        if (el.tableDate) {
-            el.pre = el.pre || el.tableDate.pre;
+        if (el.parent) {
+            el.pre = el.pre || el.parent.pre;
         }
 
         if (el.staticRoot && !el.staticProcessed) {
@@ -11000,7 +11000,7 @@
             return genIf(el, state)
         } else if (el.staticInFor) {
             var key = '';
-            var parent = el.tableDate;
+            var parent = el.parent;
             while (parent) {
                 if (parent.for) {
                     key = parent.key;
@@ -11244,7 +11244,7 @@
         // TODO: this can be further optimized by properly analyzing in-scope bindings
         // and skip force updating ones that do not actually use scope variables.
         if (!needsForceUpdate) {
-            var parent = el.tableDate;
+            var parent = el.parent;
             while (parent) {
                 if (
                     (parent.slotScope && parent.slotScope !== emptySlotScopeToken) ||
