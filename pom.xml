@@ -140,6 +140,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>SSMDEMO</finalName>
+    <finalName>Study</finalName>
   </build>
 </project>
