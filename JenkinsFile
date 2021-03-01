@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('pull code') {
+            steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '24702982-77a3-45ac-be7a-ba5e5e6d0959', url: 'git@github.com:RENKEKERONG/Study.git']]])
+            }
+        }
+        stage('build project') {
+            steps {
+               sh 'mvn clean package'
+            }
+        }
+        stage('publish project') {
+            steps {
+               deploy adapters: [tomcat8(credentialsId: '2c97d0c5-44ea-4c81-97d7-a3eee13e725d', path: '', url: 'http://renke.link:8081/')], contextPath: null, war: 'target/*.war'
+            }
+        }
+    }
+}
