@@ -21,13 +21,12 @@ pipeline {
     }
           post {
               success {
-                  emailext (
-                      subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                      body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]''${FILE,path="email.html"}':</p>
-                          <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-                      to: "279126507@qq.com",
-                      from: "279126507@qq.com"
-                  )
+                 emailext(
+                 					subject: '构建通知：${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
+                 					body: '${FILE,path="email.html"}',
+                 					to: '279126507@qq.com'
+                 				)
+                 
               }
               failure {
                   emailext (
