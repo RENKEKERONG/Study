@@ -12,11 +12,16 @@ pipeline {
                sh 'mvn clean package'
             }
         }
-        stage('publish project') {
-            steps {
-               deploy adapters: [tomcat8(credentialsId: '2c97d0c5-44ea-4c81-97d7-a3eee13e725d', path: '', url: 'http://renke.link:8081/')], contextPath: null, war: 'target/*.war'
-            }
-        }
+        stage('build project') {
+                    steps {
+                       sh 'mvn -f ${project_name} clean package dockerfile:build'
+                    }
+                }
+        stage('build project') {
+                          steps {
+                             sh 'mvn -f ${project_name} clean package dockerfile:build'
+                          }
+                      }
 
     }
           post {
@@ -26,7 +31,7 @@ pipeline {
                  					body: '${FILE,path="email.html"}',
                  					to: '279126507@qq.com'
                  				)
-                 
+
               }
               failure {
                   emailext (
