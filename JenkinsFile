@@ -11,7 +11,7 @@ pipeline {
 
         stage('build project') {
                           steps {
-                             sh 'mvn -f ${project_name} clean package dockerfile:build'
+                             sh 'mvn -f study clean package dockerfile:build'
                           }
                       }
 
