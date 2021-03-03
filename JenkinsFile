@@ -7,16 +7,8 @@ pipeline {
                checkout([$class: 'GitSCM', branches: [[name: '*/${branch}']], extensions: [], userRemoteConfigs: [[credentialsId: '24702982-77a3-45ac-be7a-ba5e5e6d0959', url: 'git@github.com:RENKEKERONG/Study.git']]])
             }
         }
-        stage('build project') {
-            steps {
-               sh 'mvn clean package'
-            }
-        }
-        stage('build project') {
-                    steps {
-                       sh 'mvn -f ${project_name} clean package dockerfile:build'
-                    }
-                }
+
+
         stage('build project') {
                           steps {
                              sh 'mvn -f ${project_name} clean package dockerfile:build'
