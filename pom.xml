@@ -78,7 +78,7 @@
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.2.3</version>
+      <version>3.5.6</version>
     </dependency>
 
     <!-- 下面两个包 commons-dbcp,commons-pool 是配置数据源的包-->
